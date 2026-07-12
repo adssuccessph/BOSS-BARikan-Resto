@@ -5,6 +5,6 @@
   3) Change demoMode to false.
 */
 window.BARIKAN_CONFIG = {
-  googleScriptUrl: "https://script.google.com/macros/s/AKfycbzfnVsJYABwiwAPZrL65gZ1tiCZ7s0GLF1ZZeElFsb7KZBIZpM6FuJnBjVKbZW03X8Y/exec",
+  googleScriptUrl: "https://script.google.com/macros/s/AKfycbw4_c3tu5QRjcYO98iRltyMPteT1hX7PNbEjNw7dui_2Oka4-ZoF6FCP847KbsSZbyB-Q/exec",
   demoMode: false
 };
