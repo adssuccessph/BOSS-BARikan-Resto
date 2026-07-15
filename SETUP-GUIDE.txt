@@ -1,0 +1,154 @@
+BARIKAN EVENT BOOKING + ADMIN v3.2 SETUP GUIDE
+==============================================
+
+CURRENT GOOGLE SHEET
+--------------------
+Spreadsheet ID:
+1bqQxZBnro4r5fXOPM7ZWZ5WkyHmcdEf-P-zwJNNLtLs
+
+Existing booking tab GID:
+2766172
+
+The setup preserves your existing booking rows.
+Missing booking columns are added automatically.
+
+NEW CATERING MENU SYSTEM
+------------------------
+The system creates two new Google Sheet tabs:
+- MenuCategories
+- MenuItems
+
+MenuCategories controls:
+- Category Name
+- Maximum number of choices
+- Active / Hidden
+- Sort Order
+
+Example:
+Main Dish = maximum 2 choices
+Dessert = maximum 1 choice
+
+MenuItems controls:
+- Category
+- Menu Item Name
+- Price / Add-on Text
+- Description
+- Menu Photo
+- Active / Hidden
+- Sort Order
+
+When a customer selects Event Catering, the catering menu automatically opens on the inquiry form.
+The customer taps menu cards to select food.
+The website and Apps Script backend both enforce the maximum number of choices per category.
+
+INSTALL / UPDATE
+----------------
+1. BACK UP your current working website and Apps Script code.
+
+2. Open your Google Sheet.
+3. Go to Extensions > Apps Script.
+4. Replace the current Code.gs with the Code.gs included in this ZIP.
+5. Save.
+6. Select setupSystem from the function dropdown.
+7. Click Run ONCE.
+8. Approve Google Sheets and Google Drive permissions if Google asks.
+
+setupSystem() will:
+- Keep existing booking rows.
+- Add missing booking columns:
+  Service IDs
+  Catering Menu Selections
+  Catering Menu Item IDs
+- Keep Services, Gallery and Settings.
+- Create MenuCategories.
+- Create MenuItems.
+- Add starter categories only:
+  Main Dish — max 2
+  Noodles / Pasta — max 1
+  Dessert — max 1
+
+IMPORTANT:
+The live system does NOT seed fake menu dishes.
+Add the real catering menu from Admin > Catering Menu.
+
+9. Go to Deploy > Manage deployments.
+10. Click Edit / pencil on the current Web App deployment.
+11. Choose New version.
+12. Execute as: Me.
+13. Who has access: Anyone.
+14. Click Deploy.
+
+The existing Apps Script /exec URL is already in config.js.
+
+WEBSITE FILES
+-------------
+Upload / replace these files on GitHub Pages or your static hosting:
+- index.html
+- admin.html
+- app.css
+- app.js
+- admin.js
+- config.js
+- assets folder
+
+After upload, use Ctrl + F5 on PC to clear old cached website files.
+
+ADMIN
+-----
+Open admin.html from your hosted website.
+
+Temporary first setup password, only when the password has not been initialized before:
+BARikan@Admin2026!
+
+Your existing admin password is preserved if it was already initialized.
+
+ADMIN > CATERING MENU
+---------------------
+A. ADD MENU CATEGORY
+1. Open Catering Menu.
+2. Enter Category Name, for example Main Dish.
+3. Set Maximum Number of Menu Choices, for example 2.
+4. Set Sort Order.
+5. Save Category.
+
+B. ADD MENU ITEM
+1. Select the Menu Category.
+2. Enter Menu Item Name.
+3. Optional: add Price / Add-on Text.
+4. Add a short description.
+5. Upload a menu photo.
+6. Set Sort Order.
+7. Save Menu Item.
+
+CUSTOMER FLOW
+-------------
+1. Customer opens index.html / live website.
+2. Customer enters event details.
+3. Customer taps Event Catering.
+4. Catering Menu appears automatically.
+5. Main Dish, Dessert and other admin-created categories appear.
+6. Customer taps food menu cards.
+7. The category counter shows selected / maximum.
+8. Customer cannot exceed the category maximum.
+9. Customer submits the inquiry.
+10. Google Sheet saves the menu selections.
+11. Admin Bookings shows the selected catering menu below Services.
+
+REFRESH
+-------
+Admin still has:
+- Refresh Now button
+- Automatic data refresh every 15 minutes
+- Countdown to the next refresh
+
+CHAT
+----
+Admin > Settings still controls the Facebook / Messenger Chat Link.
+The floating customer chat button is hidden when the chat URL is blank.
+
+META ADS TRACKING
+-----------------
+You can still use:
+?utm_source=facebook&utm_medium=paid_social&utm_campaign=barikan_event_booking&utm_content=creative_1
+
+Change creative_1 to creative_2 or creative_3 per Meta ad.

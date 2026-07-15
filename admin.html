@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>BARikan Admin</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body class="admin-body">
+  <div class="preview-banner" id="previewBanner">LOCAL ADMIN PREVIEW — Dashboard design is shown with sample data. Live edits require the updated Code.gs to be deployed.</div>
+
+  <section class="login-screen" id="loginScreen">
+    <form class="login-card" id="loginForm">
+      <div class="eyebrow">BARIKAN ADMIN</div>
+      <h1>Website Backend</h1>
+      <p>View booking inquiries, manage services and prices, upload photos, and edit the customer website.</p>
+      <div class="field"><label for="loginPassword">Admin Password</label><input type="password" id="loginPassword" required autocomplete="current-password"></div>
+      <button class="btn btn-primary" type="submit" id="loginBtn">Log In</button>
+      <div class="status-box" id="loginStatus" role="status"></div>
+      <div class="password-hint">Temporary first-login password after running <strong>setupSystem()</strong>: <strong>BARikan@Admin2026!</strong></div>
+    </form>
+  </section>
+
+  <div class="admin-shell hidden" id="adminShell">
+    <aside class="sidebar">
+      <div class="admin-logo">BARikan <span>Admin</span></div>
+      <nav class="side-nav">
+        <button class="side-btn active" data-tab="bookings">📋 Bookings</button>
+        <button class="side-btn" data-tab="services">🎉 Services & Prices</button>
+        <button class="side-btn" data-tab="menu">🍽️ Catering Menu</button>
+        <button class="side-btn" data-tab="gallery">🖼️ Gallery</button>
+        <button class="side-btn" data-tab="settings">⚙️ Settings</button>
+      </nav>
+      <div class="sidebar-bottom"><button class="btn btn-ghost" style="width:100%" id="logoutBtn">Log Out</button></div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-top">
+        <div>
+          <strong id="adminPageTitle">Bookings</strong>
+          <div class="refresh-note">Auto refresh every 15 minutes • <span id="refreshCountdown">15:00</span></div>
+        </div>
+        <div class="admin-top-actions">
+          <span class="api-badge"><span class="api-dot" id="apiDot"></span><span id="apiStatus">Checking API</span></span>
+          <button class="btn btn-ghost" id="manualRefreshBtn">↻ <span class="hide-mobile">Refresh Now</span></button>
+        </div>
+      </header>
+
+      <main class="admin-content">
+        <div class="admin-preview-note" id="adminPreviewNote">This is a local preview with sample booking data. The full backend is enabled after you replace and redeploy the included <strong>Code.gs</strong>.</div>
+
+        <section class="admin-section active" id="tab-bookings">
+          <div class="admin-title"><div><h1>Booking Inquiries</h1><p>Data submitted from the customer booking form.</p></div></div>
+          <div class="stats">
+            <div class="stat"><small>Total Inquiries</small><strong id="statTotal">0</strong></div>
+            <div class="stat"><small>New Inquiry</small><strong id="statNew">0</strong></div>
+            <div class="stat"><small>Pending</small><strong id="statPending">0</strong></div>
+            <div class="stat"><small>Confirmed</small><strong id="statConfirmed">0</strong></div>
+          </div>
+          <div class="admin-card">
+            <div class="toolbar"><input class="admin-input" id="bookingSearch" placeholder="Search name, mobile, booking ID..."></div>
+            <div class="table-wrap">
+              <table class="admin-table">
+                <thead><tr><th>Booking</th><th>Customer</th><th>Event</th><th>Services</th><th>Source</th><th>Status</th><th>Admin Notes</th><th>Action</th></tr></thead>
+                <tbody id="bookingRows"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="admin-section" id="tab-services">
+          <div class="admin-title"><div><h1>Services & Prices</h1><p>Add, edit, delete, price and upload service photos.</p></div></div>
+          <div class="admin-grid">
+            <form class="admin-card admin-form" id="serviceForm">
+              <h2 id="serviceFormTitle">Add Service</h2>
+              <input type="hidden" id="serviceId">
+              <div class="field"><label for="serviceBusiness">Business *</label><select id="serviceBusiness" required><option>BARikan Events Venue</option><option>You're my BOSS Food and Catering Services</option><option>BOSS BARikan & Resto</option></select></div>
+              <div class="field"><label for="serviceName">Service Name *</label><input id="serviceName" required></div>
+              <div class="field"><label for="servicePrice">Price / Price Text</label><input id="servicePrice" placeholder="Example: ₱7,999 or Ask for package rate"></div>
+              <div class="field"><label for="serviceDescription">Description</label><textarea id="serviceDescription"></textarea></div>
+              <div class="field"><label for="serviceImage">Service Photo</label><input type="file" id="serviceImage" accept="image/*"></div>
+              <div class="field"><label for="serviceSort">Sort Order</label><input type="number" id="serviceSort" value="1"></div>
+              <label class="check-option"><input type="checkbox" id="serviceActive" checked><span>Active / Show on website</span></label>
+              <button class="btn btn-primary" type="submit" id="saveServiceBtn">Save Service</button>
+              <button class="btn btn-ghost hidden" type="button" id="cancelServiceEdit">Cancel Edit</button>
+            </form>
+            <div class="admin-card"><h2>Current Services</h2><div class="item-list" id="serviceList"></div></div>
+          </div>
+        </section>
+
+        <section class="admin-section" id="tab-menu">
+          <div class="admin-title"><div><h1>Catering Menu</h1><p>Add menu categories, set the maximum number of choices per category, and manage the menu items customers can select.</p></div></div>
+
+          <div class="admin-menu-grid">
+            <form class="admin-card admin-form" id="menuCategoryForm">
+              <h2 id="menuCategoryFormTitle">Add Menu Category</h2>
+              <input type="hidden" id="menuCategoryId">
+              <div class="field"><label for="menuCategoryName">Category Name *</label><input id="menuCategoryName" required placeholder="Example: Main Dish"></div>
+              <div class="field"><label for="menuCategoryMax">Maximum Number of Menu Choices *</label><input type="number" id="menuCategoryMax" min="1" max="20" value="2" required><small style="color:var(--muted)">Example: Main Dish = 2 means the customer can choose up to 2 dishes.</small></div>
+              <div class="field"><label for="menuCategorySort">Sort Order</label><input type="number" id="menuCategorySort" value="1"></div>
+              <label class="check-option"><input type="checkbox" id="menuCategoryActive" checked><span>Active / Show to catering customers</span></label>
+              <button class="btn btn-primary" type="submit" id="saveMenuCategoryBtn">Save Category</button>
+              <button class="btn btn-ghost hidden" type="button" id="cancelMenuCategoryEdit">Cancel Edit</button>
+            </form>
+            <div class="admin-card"><h2>Menu Categories</h2><div class="menu-admin-list" id="menuCategoryListAdmin"></div></div>
+          </div>
+
+          <div class="admin-grid">
+            <form class="admin-card admin-form" id="menuItemForm">
+              <h2 id="menuItemFormTitle">Add Menu Item</h2>
+              <input type="hidden" id="menuItemId">
+              <div class="field"><label for="menuItemCategory">Menu Category *</label><select id="menuItemCategory" required></select></div>
+              <div class="field"><label for="menuItemName">Menu Item Name *</label><input id="menuItemName" required placeholder="Example: Beef Caldereta"></div>
+              <div class="field"><label for="menuItemPrice">Price / Add-on Text</label><input id="menuItemPrice" placeholder="Optional: +₱500 upgrade"></div>
+              <div class="field"><label for="menuItemDescription">Description</label><textarea id="menuItemDescription" placeholder="Short menu description"></textarea></div>
+              <div class="field"><label for="menuItemImage">Menu Photo</label><input type="file" id="menuItemImage" accept="image/*"></div>
+              <div class="field"><label for="menuItemSort">Sort Order</label><input type="number" id="menuItemSort" value="1"></div>
+              <label class="check-option"><input type="checkbox" id="menuItemActive" checked><span>Active / Show to customers</span></label>
+              <button class="btn btn-primary" type="submit" id="saveMenuItemBtn">Save Menu Item</button>
+              <button class="btn btn-ghost hidden" type="button" id="cancelMenuItemEdit">Cancel Edit</button>
+            </form>
+            <div class="admin-card"><h2>Current Menu Items</h2><div class="item-list" id="menuItemListAdmin"></div></div>
+          </div>
+        </section>
+
+        <section class="admin-section" id="tab-gallery">
+          <div class="admin-title"><div><h1>Gallery Photos</h1><p>Upload or remove event photos shown on the customer website.</p></div></div>
+          <div class="admin-grid">
+            <form class="admin-card admin-form" id="galleryForm">
+              <h2 id="galleryFormTitle">Add Gallery Photo</h2>
+              <input type="hidden" id="galleryId">
+              <div class="field"><label for="galleryTitle">Title</label><input id="galleryTitle" placeholder="Example: 18th Birthday Setup"></div>
+              <div class="field"><label for="galleryCategory">Category</label><input id="galleryCategory" placeholder="Venue, Catering, Birthday..."></div>
+              <div class="field"><label for="galleryImage">Photo</label><input type="file" id="galleryImage" accept="image/*"></div>
+              <div class="field"><label for="gallerySort">Sort Order</label><input type="number" id="gallerySort" value="1"></div>
+              <label class="check-option"><input type="checkbox" id="galleryActive" checked><span>Active / Show on website</span></label>
+              <button class="btn btn-primary" type="submit" id="saveGalleryBtn">Save Photo</button>
+              <button class="btn btn-ghost hidden" type="button" id="cancelGalleryEdit">Cancel Edit</button>
+            </form>
+            <div class="admin-card"><h2>Current Gallery</h2><div class="item-list" id="galleryList"></div></div>
+          </div>
+        </section>
+
+        <section class="admin-section" id="tab-settings">
+          <div class="admin-title"><div><h1>Website Settings</h1><p>Change website text, contact details, chat link and logos.</p></div></div>
+          <div class="settings-grid">
+            <form class="admin-card admin-form" id="settingsForm">
+              <h2>Website & Contact</h2>
+              <div class="field"><label>Website Name</label><input data-setting="siteName"></div>
+              <div class="field"><label>Hero Badge</label><input data-setting="heroBadge"></div>
+              <div class="field"><label>Hero Title</label><input data-setting="heroTitle"></div>
+              <div class="field"><label>Hero Subtitle</label><textarea data-setting="heroSubtitle"></textarea></div>
+              <div class="field"><label>Featured Offer Text</label><input data-setting="venuePackageText"></div>
+              <div class="field"><label>Mobile</label><input data-setting="phone"></div>
+              <div class="field"><label>Email</label><input data-setting="email"></div>
+              <div class="field"><label>Address</label><textarea data-setting="address"></textarea></div>
+              <div class="field"><label>Facebook / Messenger Chat Link</label><input data-setting="chatUrl" placeholder="https://m.me/... or Facebook page URL"></div>
+              <div class="field"><label>Chat Button Label</label><input data-setting="chatLabel"></div>
+              <div class="field"><label>Facebook Page URL</label><input data-setting="facebookUrl"></div>
+              <div class="field"><label>Booking Notice</label><textarea data-setting="bookingNotice"></textarea></div>
+              <button class="btn btn-primary" type="submit">Save Settings</button>
+            </form>
+
+            <div>
+              <div class="admin-card">
+                <h2>Logos</h2>
+                <p style="color:var(--muted)">Upload the business logos. Changes appear on the public website.</p>
+                <div class="logo-upload-grid" id="logoUploadGrid"></div>
+              </div>
+              <form class="admin-card admin-form" id="passwordForm">
+                <h2>Change Admin Password</h2>
+                <div class="field"><label for="currentPassword">Current Password</label><input type="password" id="currentPassword" required></div>
+                <div class="field"><label for="newPassword">New Password</label><input type="password" id="newPassword" minlength="10" required></div>
+                <button class="btn btn-gold" type="submit">Change Password</button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <nav class="mobile-admin-nav">
+      <button class="side-btn active" data-tab="bookings">📋 Bookings</button>
+      <button class="side-btn" data-tab="services">🎉 Services</button>
+      <button class="side-btn" data-tab="menu">🍽️ Menu</button>
+      <button class="side-btn" data-tab="gallery">🖼️ Gallery</button>
+      <button class="side-btn" data-tab="settings">⚙️ Settings</button>
+    </nav>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <div class="loading-overlay" id="loadingOverlay"><div class="loader-card"><span class="spin">↻</span><span id="loadingText">Processing...</span></div></div>
+  <iframe name="barikanAdminPostFrame" id="barikanAdminPostFrame" class="hidden" title="Admin action frame"></iframe>
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

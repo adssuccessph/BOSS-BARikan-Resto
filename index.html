@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="BARikan event venue, food and catering, restaurant and live band experience in Pateros.">
+  <title>BARikan Event Booking</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="preview-banner" id="previewBanner">LOCAL PREVIEW MODE — Full design is visible. Booking submission is only a preview until the updated Code.gs is deployed.</div>
+
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="BARikan home">
+        <div class="brand-mark" id="mainLogo"><span>B</span></div>
+        <div class="brand-text"><span id="siteName">BARikan Event Booking</span><small>EVENTS • CATERING • RESTO</small></div>
+      </a>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="#services">Our Services</a>
+        <a class="btn btn-primary" href="#book">Book an Event</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="hero" style="--hero-image:url('assets/venue-red-event.jpg')">
+      <div class="container">
+        <div class="hero-content">
+          <span class="eyebrow" id="heroBadge">VENUE • CATERING • RESTO</span>
+          <h1 id="heroTitle">Plan Your Event <span class="hero-title-accent">in One Place</span></h1>
+          <p id="heroSubtitle">From celebrations and catering to after-event chill — we have you covered.</p>
+          <div class="hero-offer" id="venuePackageText">Featured venue package from ₱7,999 fully consumable</div>
+          <div class="hero-actions">
+            <a class="btn btn-gold" href="#book">🎉 Start Your Inquiry</a>
+            <a class="btn btn-ghost" href="#gallery">View Event Photos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <section class="business-strip" aria-label="BARikan business services">
+        <article class="business-card">
+          <div class="business-logo" id="venueLogo"><img src="assets/barikan-events-venue-logo.jpg" alt="BARikan Events Venue"></div>
+          <h3>Need a venue?</h3>
+          <p>Celebrate birthdays, reunions, company gatherings and private events.</p>
+        </article>
+        <article class="business-card">
+          <div class="business-logo" id="cateringLogo"><img src="assets/youre-my-boss-logo.png" alt="You're my BOSS Food and Catering Services"></div>
+          <h3>Need catering?</h3>
+          <p>Food service and event catering for your celebration.</p>
+        </article>
+        <article class="business-card">
+          <div class="business-logo" id="restoLogo"><img src="assets/boss-barikan-resto-logo.png" alt="BOSS BARikan and Resto"></div>
+          <h3>Want to chill after?</h3>
+          <p>Eat, drink, relax and jam with live band entertainment.</p>
+        </article>
+      </section>
+    </div>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Everything for your celebration</div>
+          <h2>Venue. Catering. Then Chill.</h2>
+          <p>Choose what you need for your event. Services and prices can be edited from the admin dashboard.</p>
+        </div>
+        <div class="services-grid" id="servicesGrid"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="gallery">
+      <div class="container">
+        <div class="section-head">
+          <div class="kicker">Real celebrations</div>
+          <h2>Event Gallery</h2>
+          <p>See actual venue and catering setups. New photos uploaded from the admin dashboard can appear here.</p>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="book">
+      <div class="container booking-wrap">
+        <div class="booking-copy">
+          <div class="kicker">Event inquiry</div>
+          <h2>Tell us about your event.</h2>
+          <p>Send your preferred event details. Our team will review the date and contact you for availability and package details.</p>
+          <div class="contact-list">
+            <div class="contact-item"><span class="contact-icon">📍</span><span id="addressText">PAJ Building, 35 M. Almeda Street, San Roque, Pateros, 1620</span></div>
+            <div class="contact-item"><span class="contact-icon">📞</span><span id="phoneText">0917 588 2281</span></div>
+            <div class="contact-item"><span class="contact-icon">✉️</span><span id="emailText">bossbarikanresto@gmail.com</span></div>
+          </div>
+        </div>
+
+        <form class="form-card inquiry-card" id="bookingForm">
+          <div class="form-header">
+            <span class="form-step">EVENT INQUIRY</span>
+            <h3>Let's plan your celebration 🎉</h3>
+            <p>Fill in your event details, then tap the services you need.</p>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title"><span>01</span><div><strong>Your Details</strong><small>How can our team reach you?</small></div></div>
+            <div class="form-grid">
+              <div class="field"><label for="fullName">Full Name *</label><input id="fullName" name="fullName" required autocomplete="name" placeholder="Your full name"></div>
+              <div class="field"><label for="mobile">Mobile Number *</label><input id="mobile" name="mobile" required inputmode="tel" autocomplete="tel" placeholder="09XX XXX XXXX"></div>
+              <div class="field full"><label for="email">Email <span class="optional-text">Optional</span></label><input id="email" type="email" name="email" autocomplete="email" placeholder="you@example.com"></div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-title"><span>02</span><div><strong>Event Details</strong><small>Tell us about your preferred celebration schedule.</small></div></div>
+            <div class="form-grid">
+              <div class="field">
+                <label for="eventType">Event Type *</label>
+                <select id="eventType" name="eventType" required>
+                  <option value="">Choose your event</option>
+                  <option>Birthday</option><option>Reunion</option><option>Company Event</option>
+                  <option>Wedding / Reception</option><option>Private Celebration</option><option>Other</option>
+                </select>
+              </div>
+              <div class="field"><label for="guestCount">Estimated Guests *</label><input id="guestCount" type="number" min="1" name="guestCount" required placeholder="Example: 50"></div>
+              <div class="field"><label for="eventDate">Preferred Date *</label><input id="eventDate" type="date" name="eventDate" required></div>
+              <div class="field"><label for="eventTime">Preferred Time <span class="optional-text">Optional</span></label><input id="eventTime" type="time" name="eventTime"></div>
+            </div>
+          </div>
+
+          <div class="form-section service-picker-section">
+            <div class="form-section-title"><span>03</span><div><strong>What do you need?</strong><small>Tap one or more service cards to add them to your inquiry.</small></div></div>
+            <div class="service-choice-grid" id="serviceChoices"></div>
+            <div class="selection-summary" id="selectionSummary"><span class="selection-dot"></span><span>Select at least one service</span></div>
+          </div>
+
+          <div class="form-section menu-picker-section hidden" id="cateringMenuSection">
+            <div class="form-section-title"><span>04</span><div><strong>Choose your catering menu</strong><small>Your menu choices appear only when Event Catering is selected. Follow the maximum selection shown for each category.</small></div></div>
+            <div class="menu-category-list" id="menuCategoryList"></div>
+            <div class="selection-summary menu-selection-summary" id="menuSelectionSummary"><span class="selection-dot"></span><span>No catering menu selected yet</span></div>
+          </div>
+
+          <div class="form-section compact-section">
+            <div class="form-section-title"><span>05</span><div><strong>Additional requests</strong><small>Share your theme, setup requests or other event notes.</small></div></div>
+            <div class="field full"><label for="notes">Anything else we should know? <span class="optional-text">Optional</span></label><textarea id="notes" name="notes" placeholder="Theme, setup request, food preference, special occasion details..."></textarea></div>
+          </div>
+
+          <div class="notice inquiry-notice" id="bookingNotice">Your inquiry is not yet a confirmed booking. Our team will check the date and contact you.</div>
+          <button class="btn btn-primary inquiry-submit" id="submitBtn" type="submit"><span>Send Event Inquiry</span><b>→</b></button>
+          <div class="status-box" id="formStatus" role="status"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container footer-row"><span id="footerName">BARikan Event Booking</span><span>Venue • Catering • Restaurant • Live Band</span></div></footer>
+
+  <button class="chat-fab hidden" id="chatFab" aria-label="Open chat">💬</button>
+  <aside class="chat-panel" id="chatPanel">
+    <div class="chat-head"><strong id="chatTitle">Chat with us</strong><span>Questions about dates, packages or services?</span></div>
+    <div class="chat-body"><p>Send us a message and tell us your event date and estimated number of guests.</p><a class="btn btn-primary" id="chatLink" target="_blank" rel="noopener">Open Messenger / Facebook</a></div>
+  </aside>
+
+  <div class="modal" id="successModal">
+    <div class="modal-card">
+      <div style="font-size:50px">🎉</div>
+      <h3>Inquiry Received!</h3>
+      <p id="successMessage">Thank you. Our team will check your preferred date and contact you.</p>
+      <div class="booking-id" id="bookingIdText"></div>
+      <button class="btn btn-gold" id="closeModal" type="button">Done</button>
+    </div>
+  </div>
+
+  <iframe name="barikanPostFrame" id="barikanPostFrame" class="hidden" title="Submission frame"></iframe>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
